@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>YOLO Stats Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<h2>🗑 YOLO Garbage Detection Stats</h2>
+
+<canvas id="chart" width="400" height="200"></canvas>
+
+<script>
+
+async function loadData() {
+    const res = await fetch("http://127.0.0.1:5000/stats");
+    const data = await res.json();
+
+    const labels = Object.keys(data);
+    const values = Object.values(data);
+
+    new Chart(document.getElementById("chart"), {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Detection Count",
+                data: values
+            }]
+        }
+    });
+}
+
+loadData();
+
+</script>
+
+</body>
+</html>
